@@ -1,0 +1,60 @@
+import React from 'react';
+import useGlobal from "./store/index";
+import './App.css';
+import Todo from './components/todo/todo';
+import ActionBar from './components/actionBar/actionBar';
+import EnterBar from './components/enterBar/enterBar';
+
+interface Tasks {
+  id: number,
+  task: string,
+  status: Status,
+  priority: string
+}
+
+enum Status {
+  COMPLETE,
+  INCOMPLETE
+}
+
+enum Display {
+  ALL,
+  COMPLETE,
+  INCOMPLETE
+}
+
+const App: React.FC = () => {
+  const [globalState] = useGlobal();
+
+  const allTasks: Tasks[]= globalState.tasks;
+  const completeTasks: Tasks[] = allTasks.filter(task => task.status !== Status.INCOMPLETE);
+  const incompleteTasks: Tasks[] = allTasks.filter(task => task.status !== Status.COMPLETE);
+  const priority: string = globalState.priority;
+
+  let renderTasks: Tasks[];
+
+  if (globalState.display === Display.COMPLETE){
+    renderTasks = completeTasks;
+  } else if (globalState.display === Display.INCOMPLETE) {
+    renderTasks = incompleteTasks;
+  } else {
+    renderTasks = allTasks;
+  }
+
+  return (
+    <div className="App">
+      <EnterBar placeholder='Enter Task...'></EnterBar>
+        {renderTasks.filter((task: { task: string | undefined; id: number; status: Status; priority: string}) => {
+          if(priority === 'all') {
+            return task;
+          }
+          return task.priority === priority
+        }).map((task: { task: string | undefined; id: number; status: Status; priority: string})  =>(
+          <Todo key={`task_${task.id}`} task={task.task} id={task.id} status={task.status} priority={task.priority}></Todo>
+        ))}
+      <ActionBar></ActionBar>
+    </div>
+  );
+}
+
+export default App;

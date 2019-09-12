@@ -1,0 +1,36 @@
+.todo {
+    text-align: left;
+    border-radius: 10px;
+    border: 2px solid black;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: azure;
+}
+
+
+p {
+    color: black;
+    font-size: 1.5em;
+    padding: 10px;
+    width: 70%;
+}
+
+.complete {
+    text-decoration: line-through;
+}
+
+.incomplete {
+}
+
+.low {
+    border: 10px solid rgba(0,128,0,0.75);
+}
+
+.medium {
+    border: 10px solid rgba(255,165,0,0.75);
+}
+
+.high {
+    border: 10px solid rgba(255,0,0,0.75);
+}

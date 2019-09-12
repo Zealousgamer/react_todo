@@ -1,0 +1,7 @@
+.App {
+  display: grid;
+  justify-content: center;
+  grid-gap: 15px 10px;
+  grid-auto-columns: 1fr;
+  padding: 0 25% 0 25%;
+}

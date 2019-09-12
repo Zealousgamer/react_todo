@@ -1,0 +1,8 @@
+.enterBar {
+    display: flex;
+    flex-direction: row;
+}
+
+.inputTask {
+    width: 75%;
+}

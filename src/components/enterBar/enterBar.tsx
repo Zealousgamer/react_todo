@@ -29,18 +29,36 @@ const EnterBar: React.FC<IEnterBarProps> = (props) => {
     const {placeholder} = props;
     const [globalState, globalActions] = useGlobal();
     const classes = useStyles();
+
+    const inputLabel = React.useRef(null);
+    const [labelWidth, setLabelWidth] = React.useState(0);
+    React.useEffect(() => {
+        //@ts-ignore
+        setLabelWidth(inputLabel.current.offsetWidth);
+    }, []);
+    let isLow: boolean = false;
+    let isMedium: boolean = false;
+    let isHigh: boolean = false;
+    if (priority === 'low') {
+        isLow = true;
+    } else if (priority === 'medium') {
+        isMedium = true;
+    } else {
+        isHigh = true;
+    }
+
     return (
         <div className='enterBar'>
             <input className='inputTask' type="text" name="task" placeholder={placeholder} defaultValue={taskValue} onInput={e => setTaskValue((e.target as HTMLInputElement).value)}></input>
             <form className={classes.root} autoComplete="off">
                 <FormControl variant="outlined" className={classes.formControl}>
-                    <InputLabel htmlFor="outlined-age-simple">
+                    <InputLabel ref={inputLabel} htmlFor="outlined-age-simple">
                     Priority
                     </InputLabel>
-                    <Select onChange={e => setPriority((e.target as HTMLSelectElement).value)} input={<OutlinedInput labelWidth={0} name="priority" id="outlined-age-simple" />}>
-                        <MenuItem value='low'>Low</MenuItem>
-                        <MenuItem value='medium'>Medium</MenuItem>
-                        <MenuItem value='high'>High</MenuItem>
+                    <Select value={priority} onChange={e => setPriority((e.target as HTMLSelectElement).value)} input={<OutlinedInput labelWidth={labelWidth} name="priority" id="outlined-age-simple" />}>
+                        <MenuItem selected={isLow?isLow:undefined} value='low'>Low</MenuItem>
+                        <MenuItem selected={isMedium?isMedium:undefined}  value='medium'>Medium</MenuItem>
+                        <MenuItem selected={isHigh?isHigh:undefined} value='high'>High</MenuItem>
                     </Select>
                 </FormControl>
             </form>

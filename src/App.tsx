@@ -49,7 +49,7 @@ const App: React.FC = () => {
             return task;
           }
           return task.priority === priority
-        }).map((task: { task: string | undefined; id: number; status: Status; priority: string})  =>(
+        }).map((task: { task: string; id: number; status: Status; priority: string})  =>(
           <Todo key={`task_${task.id}`} task={task.task} id={task.id} status={task.status} priority={task.priority}></Todo>
         ))}
       <ActionBar></ActionBar>

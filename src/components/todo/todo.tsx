@@ -10,6 +10,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 import { Icon } from '@material-ui/core';
+import DraggableItemWrapper from '../drag_and_drop/DraggableItemWrapper';
 
 interface ITodoProps {
     task: string;
@@ -90,25 +91,27 @@ const Todo: React.FC<ITodoProps> = (props) => {
     }
     
     return (
-        <div className={`todo ${priority}`}  key={id}>
-            <Radio className='toggleStatus' onChange={() => toggleChecked(id,checked,globalState,globalActions)} checked={checked} onClick={() => toggleChecked(id,checked,globalState,globalActions)}></Radio>
-            <p className={classNameStatus}>{task}</p>
-            <form className={classes.root} autoComplete="off">
-                <FormControl variant="outlined" className={classes.formControl}>
-                    <InputLabel ref={inputLabel} htmlFor="outlined-age-simple">
-                    Priority
-                    </InputLabel>
-                    <Select value={value} onChange={e => changePriority(id,(e.target as HTMLSelectElement).value,globalActions,setValue)} input={<OutlinedInput labelWidth={labelWidth} name="priority" id="outlined-age-simple" />}>
-                        <MenuItem selected={isLow?isLow:undefined} value='low'>Low</MenuItem>
-                        <MenuItem selected={isMedium?isMedium:undefined}  value='medium'>Medium</MenuItem>
-                        <MenuItem selected={isHigh?isHigh:undefined} value='high'>High</MenuItem>
-                    </Select>
-                </FormControl>
-            </form>
-            <Button className='remove' onClick={() => removeTask(globalActions, id)}>
-                <Icon >clear</Icon>
-            </Button>
-        </div>
+        // <DraggableItemWrapper draggableId={`${task}-${id}`} index={position}>
+            <div className={`todo ${priority}`}  key={id}>
+                <Radio className='toggleStatus' onChange={() => toggleChecked(id,checked,globalState,globalActions)} checked={checked} onClick={() => toggleChecked(id,checked,globalState,globalActions)}></Radio>
+                <p className={classNameStatus}>{task}</p>
+                <form className={classes.root} autoComplete="off">
+                    <FormControl variant="outlined" className={classes.formControl}>
+                        <InputLabel ref={inputLabel} htmlFor="outlined-age-simple">
+                        Priority
+                        </InputLabel>
+                        <Select value={value} onChange={e => changePriority(id,(e.target as HTMLSelectElement).value,globalActions,setValue)} input={<OutlinedInput labelWidth={labelWidth} name="priority" id="outlined-age-simple" />}>
+                            <MenuItem selected={isLow?isLow:undefined} value='low'>Low</MenuItem>
+                            <MenuItem selected={isMedium?isMedium:undefined}  value='medium'>Medium</MenuItem>
+                            <MenuItem selected={isHigh?isHigh:undefined} value='high'>High</MenuItem>
+                        </Select>
+                    </FormControl>
+                </form>
+                <Button className='remove' onClick={() => removeTask(globalActions, id)}>
+                    <Icon >clear</Icon>
+                </Button>
+            </div>
+        // </DraggableItemWrapper>
     );
 }
 

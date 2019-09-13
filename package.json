@@ -12,6 +12,7 @@
     },
     "@types/node": "12.6.8",
     "@types/react": "16.8.23",
+    "@types/react-beautiful-dnd": "^11.0.3",
     "@types/react-dom": "16.8.5",
     "@typescript-eslint/eslint-plugin": {
       "integrity": "sha512-WQHCozMnuNADiqMtsNzp96FNox5sOVpU8Xt4meaT4em8lOG1SrOv92/mUbEHQVh90sldKSfcOc/I0FOb/14G1g==",
@@ -124,6 +125,7 @@
       "version": "1.0.0"
     },
     "react": "^16.9.0",
+    "react-beautiful-dnd": "^11.0.5",
     "react-dom": "^16.9.0",
     "react-scripts": "3.0.1",
     "regexpp": {

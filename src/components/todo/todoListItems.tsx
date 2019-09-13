@@ -2,18 +2,23 @@ import * as React from 'react';
 import Todo from './todo';
 
 interface IDraggableListItems {
-  items: { task: string; id: number; status: Status; priority: string}[]
+  items: { task: string; id: number; status: Status; priority: string; }[]
 }
 
 enum Status {
     COMPLETE,
     INCOMPLETE
 }
+const TodoListItems: React.FC<IDraggableListItems> = (props) => {
 
-export default (props: IDraggableListItems) =>
-  <div> {props.items.map(toTodo)} </div>
-
-
-function toTodo(task: { task: string; id: number; status: Status; priority: string}) {
-  return <Todo key={`task_${task.id}`} task={task.task} id={task.id} status={task.status} priority={task.priority} />
+  return (
+    <div>
+      {
+        props.items.map((item, index) => {
+          return <Todo key={`task_${item.id}`} task={item.task} id={item.id} status={item.status} priority={item.priority} position={index} />
+        })
+      } 
+    </div>
+  )
 }
+export default TodoListItems;

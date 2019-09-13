@@ -1,7 +1,9 @@
 import React from 'react';
 import useGlobal from "./store/index";
 import './App.css';
-import Todo from './components/todo/todo';
+import DroppableWrapper from './components/drag_and_drop/DroppableWrapper';
+import DraggableListItems from './components/todo/todoListItems';
+import TodoContext from './components/drag_and_drop/TodoContext'
 import ActionBar from './components/actionBar/actionBar';
 import EnterBar from './components/enterBar/enterBar';
 
@@ -9,7 +11,8 @@ interface Tasks {
   id: number,
   task: string,
   status: Status,
-  priority: string
+  priority: string,
+  position: number
 }
 
 enum Status {
@@ -24,13 +27,25 @@ enum Display {
 }
 
 const App: React.FC = () => {
-  const [globalState] = useGlobal();
+  const [globalState, globalActions] = useGlobal();
 
   const allTasks: Tasks[]= globalState.tasks;
   const completeTasks: Tasks[] = allTasks.filter(task => task.status !== Status.INCOMPLETE);
   const incompleteTasks: Tasks[] = allTasks.filter(task => task.status !== Status.COMPLETE);
   const priority: string = globalState.priority;
 
+  const onDragEnd = (result: any) => {
+    const { destination, source } = result;
+  
+    if (!destination) { return }
+    const allTasks: Tasks[] = globalState.tasks;
+    const taskToMove: Tasks = allTasks[source.index]
+    allTasks.splice(source.index, 1);
+    allTasks.splice(destination.index, 0, taskToMove);
+    globalActions.setTasks(allTasks);
+  }
+
+  
   let renderTasks: Tasks[];
 
   if (globalState.display === Display.COMPLETE){
@@ -44,14 +59,17 @@ const App: React.FC = () => {
   return (
     <div className="App">
       <EnterBar placeholder='Enter Task...'></EnterBar>
-        {renderTasks.filter((task: { task: string | undefined; id: number; status: Status; priority: string}) => {
+      //@ts-ignore
+      <TodoContext onDragEnd={onDragEnd}>
+        <DroppableWrapper droppableId={1} className="source">
+          <DraggableListItems items={renderTasks.filter((task: { task: string | undefined; id: number; status: Status; priority: string}) => {
           if(priority === 'all') {
             return task;
           }
           return task.priority === priority
-        }).map((task: { task: string; id: number; status: Status; priority: string})  =>(
-          <Todo key={`task_${task.id}`} task={task.task} id={task.id} status={task.status} priority={task.priority}></Todo>
-        ))}
+        })} />
+        </DroppableWrapper>
+      </TodoContext>
       <ActionBar></ActionBar>
     </div>
   );

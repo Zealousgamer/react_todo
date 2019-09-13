@@ -1,8 +1,9 @@
 interface Tasks {
     id: number,
     task: string,
-    status: Status
-    priority: string
+    status: Status,
+    priority: string,
+    position: number
 }
 
 enum Status {
@@ -23,9 +24,21 @@ export const addToCounter = (store: any, amount: number) => {
 };
 
 export const addNewTask = (store: any, id: number, task: string, priority: string) => {
-    const newTaskValue: Tasks = {id:id,task:task,status:Status.INCOMPLETE,priority:priority};
+    const newTaskValue: Tasks = {id:id,task:task,status:Status.INCOMPLETE,priority:priority,position:id};
     store.state.tasks.push(newTaskValue);
     localStorage.setItem('todoState',JSON.stringify(store.state));
+};
+
+export const getTaskByPosition = (store: any, position: number) => {
+    const tasks: Tasks[]  = store.state.tasks;
+    const task: Tasks[] = tasks.filter(task => task.position === position);
+    return task;
+};
+
+export const getTaskByID = (store: any, id: number) => {
+    const tasks: Tasks[]  = store.state.tasks;
+    const task: Tasks[] = tasks.filter(task => task.position === id);
+    return task;
 };
 
 export const removeTaskByID = (store: any, id: number) => {
@@ -68,3 +81,8 @@ export const changePriority = (store: any, priority: string) => {
     store.setState({priority: priority});
     localStorage.setItem('todoState',JSON.stringify(store.state));
 };
+
+export const setTasks = (store: any, tasks: Tasks[]) => {
+    store.setState({tasks: tasks});
+    localStorage.setItem('todoState',JSON.stringify(store.state));
+}

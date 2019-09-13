@@ -17,6 +17,7 @@ interface ITodoProps {
     id: number;
     status: Status;
     priority: string;
+    position: number;
 }
 
 enum Status {
@@ -57,7 +58,7 @@ function changePriority(id: number, priority: string, globalActions: any, setVal
 }
 
 const Todo: React.FC<ITodoProps> = (props) => {
-    const {task, id, status, priority} = props;
+    const {task, id, status, priority, position} = props;
     const [globalState,globalActions] = useGlobal();
     const classes = useStyles();
     const [value, setValue] = React.useState(priority);
@@ -91,7 +92,7 @@ const Todo: React.FC<ITodoProps> = (props) => {
     }
     
     return (
-        // <DraggableItemWrapper draggableId={`${task}-${id}`} index={position}>
+        <DraggableItemWrapper draggableId={`${task}-${id}`} index={position}>
             <div className={`todo ${priority}`}  key={id}>
                 <Radio className='toggleStatus' onChange={() => toggleChecked(id,checked,globalState,globalActions)} checked={checked} onClick={() => toggleChecked(id,checked,globalState,globalActions)}></Radio>
                 <p className={classNameStatus}>{task}</p>
@@ -111,7 +112,7 @@ const Todo: React.FC<ITodoProps> = (props) => {
                     <Icon >clear</Icon>
                 </Button>
             </div>
-        // </DraggableItemWrapper>
+        </DraggableItemWrapper>
     );
 }
 

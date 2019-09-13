@@ -55,11 +55,6 @@ function changePriority(id: number, priority: string, globalActions: any, setVal
     setValue(priority);
 }
 
-function onDragStart(event: React.DragEvent, task: string) {
-    console.log("Drag: "+task);
-    event.dataTransfer.setData('id',task);
-}
-
 const Todo: React.FC<ITodoProps> = (props) => {
     const {task, id, status, priority} = props;
     const [globalState,globalActions] = useGlobal();
@@ -95,7 +90,7 @@ const Todo: React.FC<ITodoProps> = (props) => {
     }
     
     return (
-        <div className={`todo ${priority}`}  key={id} draggable={true} onDragStart={(e)=>onDragStart(e, task)} >
+        <div className={`todo ${priority}`}  key={id}>
             <Radio className='toggleStatus' onChange={() => toggleChecked(id,checked,globalState,globalActions)} checked={checked} onClick={() => toggleChecked(id,checked,globalState,globalActions)}></Radio>
             <p className={classNameStatus}>{task}</p>
             <form className={classes.root} autoComplete="off">

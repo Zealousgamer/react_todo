@@ -59,7 +59,6 @@ const App: React.FC = () => {
   return (
     <div className="App">
       <EnterBar placeholder='Enter Task...'></EnterBar>
-      //@ts-ignore
       <TodoContext onDragEnd={onDragEnd}>
         <DroppableWrapper droppableId={1} className="source">
           <DraggableListItems items={renderTasks.filter((task: { task: string | undefined; id: number; status: Status; priority: string}) => {

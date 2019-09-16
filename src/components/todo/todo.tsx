@@ -92,7 +92,7 @@ const Todo: React.FC<ITodoProps> = (props) => {
     }
     
     return (
-        <DraggableItemWrapper draggableId={`${task}-${id}`} index={position}>
+        <DraggableItemWrapper key={`${task}-${id}`} draggableId={`${task}-${id}`} index={position}>
             <div className={`todo ${priority}`}  key={id}>
                 <Radio className='toggleStatus' onChange={() => toggleChecked(id,checked,globalState,globalActions)} checked={checked} onClick={() => toggleChecked(id,checked,globalState,globalActions)}></Radio>
                 <p className={classNameStatus}>{task}</p>

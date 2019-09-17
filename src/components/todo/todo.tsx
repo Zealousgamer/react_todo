@@ -1,6 +1,6 @@
-import React from 'react'
+import React from 'react';
 import Radio from '@material-ui/core/Radio';
-import useGlobal from '../../store/index'
+import useGlobal from '../../store/index';
 import './todo.css';
 import { makeStyles } from '@material-ui/core/styles';
 import OutlinedInput from '@material-ui/core/OutlinedInput';

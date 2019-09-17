@@ -9,5 +9,7 @@ interface IVerticalColumnContextProps {
 
 export default (props: IVerticalColumnContextProps) =>
   <div className="dnd-game">
-    <DragDropContext onDragEnd={props.onDragEnd} {...props} />
+    <DragDropContext onDragEnd={props.onDragEnd} {...props} >
+      {props.children}
+    </DragDropContext>
   </div>
